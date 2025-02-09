@@ -13,11 +13,5 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint:{
-      ignoreDuringBuilds:true
-  }
-};
 
 export default eslintConfig;
