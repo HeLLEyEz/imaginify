@@ -1,13 +1,11 @@
 "use client"
 
 import { navLinks } from '@/constants'
-import { SignedIn, SignedOut } from '@clerk/nextjs'
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { UserButton } from '@clerk/clerk-react';
 import { Button } from '../ui/button'
-import React from 'react'
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -68,7 +66,7 @@ const Sidebar = () => {
               })}
 
               <li className="flex-center cursor-pointer gap-2 p-4">
-                <UserButton afterSwitchSessionUrl='/' showName />
+                <UserButton afterSignOutUrl='/' showName />
               </li>
             </ul>
           </SignedIn>
