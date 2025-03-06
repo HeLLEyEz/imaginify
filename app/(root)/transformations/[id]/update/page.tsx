@@ -7,7 +7,20 @@ import { transformationTypes } from "@/constants";
 import { getUserById } from "@/lib/actions/user.actions";
 import { getImageById } from "@/lib/actions/image.actions";
 
-const Page = async ({ params: { id } }: SearchParamProps) => {
+// Define the correct props type for Next.js pages
+interface PageProps {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+// You'll need to define this type if it doesn't exist
+type TransformationTypeKey = keyof typeof transformationTypes;
+
+const Page = async ({ params }: PageProps) => {
+  // Await the params before accessing the id
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+
   const { userId } = await auth();
 
   if (!userId) redirect("/sign-in");

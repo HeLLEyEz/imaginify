@@ -9,7 +9,17 @@ import { getImageById } from "@/lib/actions/image.actions";
 import { getImageSize } from "@/lib/utils";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 
-const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
+// Define the correct props type for Next.js pages
+interface PageProps {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+const ImageDetails = async ({ params }: PageProps) => {
+  // Await the params before accessing the id
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+  
   const { userId } = await auth();
 
   const image = await getImageById(id);
