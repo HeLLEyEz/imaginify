@@ -7,19 +7,19 @@ import Header from "@/components/shared/Header";
 import { getUserImages } from "@/lib/actions/image.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 
-// Define the correct props type for Next.js pages
-interface PageProps {
-  params: Record<string, string>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}
+// Remove all custom type definitions
 
-const Profile = async ({ searchParams }: PageProps) => {
-  // Await the searchParams before accessing its properties
-  const resolvedSearchParams = await searchParams;
-  const page = Number(resolvedSearchParams?.page) || 1;
+export default async function Profile({
+  params,
+  searchParams,
+}: {
+  params: any;
+  searchParams: { page?: string };
+}) {
+  const page = Number(searchParams?.page) || 1;
   
   const { userId } = await auth();
-
+  
   if (!userId) redirect("/sign-in");
 
   const user = await getUserById(userId);
@@ -68,6 +68,4 @@ const Profile = async ({ searchParams }: PageProps) => {
       </section>
     </>
   );
-};
-
-export default Profile;
+}
