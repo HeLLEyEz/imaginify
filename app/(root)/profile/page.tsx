@@ -7,16 +7,18 @@ import Header from "@/components/shared/Header";
 import { getUserImages } from "@/lib/actions/image.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 
-// Remove all custom type definitions
-
 export default async function Profile({
   params,
   searchParams,
 }: {
-  params: any;
-  searchParams: { page?: string };
+  params: Promise<any>;
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const page = Number(searchParams?.page) || 1;
+  // Wait for both params and searchParams Promises to resolve
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  
+  const page = Number(resolvedSearchParams?.page) || 1;
   
   const { userId } = await auth();
   
